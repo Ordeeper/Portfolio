@@ -1,0 +1,227 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import ArrowCard from "@components/ArrowCard";
+import StackCard from "@components/StackCard.astro";
+import { SITE, SOCIALS } from "@consts";
+
+const posts = (await getCollection("blog"))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 3);
+
+const projects = (await getCollection("projects"))
+    .filter((project) => !project.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 3);
+
+const stack = [
+    {
+        text: "Astro",
+        icon: "astro",
+        href: "https://astro.build",
+    },
+    {
+        text: "Javascript",
+        icon: "javascript",
+        href: "https://www.javascript.com",
+    },
+    {
+        text: "Typescript",
+        icon: "typescript",
+        href: "https://www.typescriptlang.org",
+    },
+    {
+        text: "Tailwind",
+        icon: "tailwind",
+        href: "https://tailwindcss.com",
+    },
+];
+---
+
+<PageLayout title="Home" description={SITE.DESCRIPTION}>
+    <!-- HERO -->
+    <section class="animate relative bg-white dark:bg-black h-screen w-full">
+        <canvas id="canvas3d"></canvas>
+        <script src="../scripts/3d-moon.js"></script>
+        <a
+            href="#about"
+            style="height: 14.5%;"
+            class="flex sm:items-end sm:pb-5 absolute left-1/2 bottom-0"
+        >
+        <span class="sr-only">Scroll Down</span>
+            <div class="scrolldown"></div>
+        </a>
+    </section>
+
+    <div class="relative" id="about">
+        <div class="mx-auto max-w-screen-sm p-5 space-y-24 mb-12">
+            <!-- About Section -->
+            <section class="animate flex flex-col gap-12">
+                <article>
+                    <p>
+                        I am a <b><i>seasoned software engineer</i></b>,
+                        <b><i>UI/UX designer</i></b>, with more than <b
+                            ><i>5 years of experience</i></b
+                        >.
+                        <p>
+                            I love to both build, break, and refine things. I am
+                            driven by challenging projects that require
+                            self-guided research and dynamic problem-solving. My
+                            true passion lies in crafting creative front-end
+                            designs with unique takes on color, typography, and
+                            motion.
+                        </p>
+                        <p>During my career</p>
+                        <p>
+                            I have built products ranging from dynamic websites
+                            and cross-platform apps to games, automation
+                            scripts, and AI-integrated solutions, with a focus
+                            on delivering fast, elegant code along with
+                            delightful user interfaces.
+                        </p>
+                        <p>Now</p>
+                        <p>
+                            I currently work as a software engineer at Inkius
+                            and AdaptaVerse, where I specialize in product
+                            planning, design, and development, leveraging
+                            technologies like Nuxt.js, Vue.js, TypeScript, PHP,
+                            Laravel, and Flutter to turn concepts into beautiful
+                            digital experiences.
+                        </p>
+                    </p>
+                </article>
+
+                <!-- Blog Preview Section -->
+                <section class="animate">
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <p class="font-semibold text-black dark:text-white">
+                                Recent posts
+                            </p>
+                            <a
+                                href="/blog"
+                                class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+                            >
+                                <span
+                                    class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
+                                >
+                                    All posts
+                                </span>
+                            </a>
+                        </div>
+                        <ul class="space-y-4">
+                            {
+                                posts.map((post) => (
+                                    <li>
+                                        <ArrowCard entry={post} />
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Tech Stack Section -->
+                <!-- <section class="animate">
+                <div class="space-y-4">
+                    <p class="font-semibold text-black dark:text-white">
+                        Website build with
+                    </p>
+                    <div class="flex flex-wrap items-center gap-2 mt-5">
+                        {
+                            stack.map((item) => (
+                                <StackCard
+                                    text={item.text}
+                                    icon={item.icon}
+                                    href={item.href}
+                                />
+                            ))
+                        }
+                    </div>
+                    <div>
+                        Performing reactivity and statefulness, special guest
+                        <a
+                            href="https://www.solidjs.com/"
+                            target="_blank"
+                            class="w-fit group underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+                        >
+                            <span
+                                class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
+                            >
+                                SolidJS
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </section> -->
+
+                <!-- Project Preview Section -->
+                <section class="animate">
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <p class="font-semibold text-black dark:text-white">
+                                Recent projects
+                            </p>
+                            <a
+                                href="/projects"
+                                class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+                            >
+                                <span
+                                    class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
+                                >
+                                    All projects
+                                </span>
+                            </a>
+                        </div>
+                        <ul class="space-y-4">
+                            {
+                                projects.map((project) => (
+                                    <li>
+                                        <ArrowCard entry={project} />
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Contact Section -->
+                <section class="animate">
+                    <div>
+                        <p class="font-semibold text-black dark:text-white">
+                            Let's Connect
+                        </p>
+                        <p>Reach out to me via email or on social media.</p>
+                        <div
+                            class="grid grid-cols-4 gap-y-2 mt-4 auto-cols-min"
+                        >
+                            {
+                                SOCIALS.map((social) => (
+                                    <>
+                                        <div class="col-span-1 flex items-center gap-1">
+                                            <span class="whitespace-nowrap truncate">
+                                                {social.NAME}
+                                            </span>
+                                        </div>
+                                        <div class="col-span-3 truncate">
+                                            <a
+                                                href={social.HREF}
+                                                target="_blank"
+                                                class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+                                            >
+                                                <span class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend">
+                                                    {social.TEXT}
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </div>
+</PageLayout>
